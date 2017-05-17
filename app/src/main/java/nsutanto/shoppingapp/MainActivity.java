@@ -13,9 +13,15 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import nsutanto.model.RestClient;
+import java.util.ArrayList;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    ArrayList<String> mListItems = new ArrayList<String>();
+    ArrayAdapter<String> mAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,15 +29,6 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -43,6 +40,15 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
         RestClient myClient = new RestClient();
+
+
+
+        mAdapter=new ArrayAdapter<String>(this,
+                android.R.layout.simple_list_item_1,
+                mListItems);
+
+        ListView listView = (ListView) findViewById(R.id.listViewVendors);
+        listView.setAdapter(mAdapter);
     }
 
     @Override
@@ -100,5 +106,15 @@ public class MainActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    public void addVendor(View view)
+    {
+        Snackbar.make(view, "Store is added", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+
+        mAdapter.add("Test");
+        //ListView unitListView = (ListView)findViewById(R.id.listViewVendors);
+
     }
 }
